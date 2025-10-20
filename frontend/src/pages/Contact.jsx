@@ -34,17 +34,17 @@ const Contact = () => {
   };
 
   return (
-    <section className="content-section">
-      <h2 className="section-title" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+    <section className="content-section px-4">
+      <h2 className="section-title text-2xl sm:text-3xl md:text-4xl" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
         <span className="inline-block w-2 h-2 bg-accent-color rounded-full mr-2"></span>
         Initiate_Contact
       </h2>
-      <p className="text-center text-lg mb-12 text-text-secondary max-w-xl mx-auto p-4 rounded-xl border border-accent-color/20" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+      <p className="text-center text-sm sm:text-base md:text-lg mb-8 sm:mb-12 text-text-secondary max-w-xl mx-auto p-3 sm:p-4 rounded-xl border border-accent-color/20" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
         <i className="fas fa-terminal text-accent-color mr-2"></i>
         Have a security project or collaboration opportunity? Send a secure transmission. Let's strengthen digital defenses together.
       </p>
 
-      <div className="max-w-lg mx-auto p-6 sm:p-8 rounded-xl border border-accent-color/30 shadow-2xl">
+      <div className="max-w-lg mx-auto p-4 sm:p-6 md:p-8 rounded-xl border border-accent-color/30 shadow-2xl">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Name Field */}
           <div className="mb-6">

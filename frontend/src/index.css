@@ -22,6 +22,14 @@ body {
   font-family: var(--font-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  /* Improve text rendering on mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent text size adjustment on mobile */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* Apply Ubuntu Mono Bold to all paragraphs */
@@ -192,7 +200,7 @@ p {
 .content-section {
   position: relative;
   min-height: calc(100vh - 200px);
-  padding: 2.5rem 1.5rem;
+  padding: 2.5rem 1rem;
   border: 1px solid var(--border-color);
   background-color: transparent;
   border-radius: 10px;
@@ -200,6 +208,9 @@ p {
     inset 0 0 20px rgba(0, 0, 0, 0.35);
   animation: contentFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   margin-bottom: 2.5rem;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
 }
 
 @keyframes contentFadeIn {
@@ -791,29 +802,36 @@ p {
   font-family: var(--font-primary);
   font-weight: 700;
   color: var(--text-color);
-  font-size: clamp(2.2rem, 8vw, 4.2rem);
-  line-height: 1.1;
+  font-size: clamp(1.5rem, 6vw, 4.2rem);
+  line-height: 1.2;
   margin-bottom: 0.75rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 #home-section .hero-title-hacker {
   font-family: var(--font-title);
   color: var(--accent-color);
-  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-size: clamp(0.875rem, 4vw, 3.5rem);
   margin-bottom: 1.5rem;
   display: block;
   letter-spacing: 1px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 #home-section .hero-subtitle {
-  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-size: clamp(0.875rem, 3vw, 1.4rem);
   letter-spacing: 0.5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Responsive */
 @media screen and (max-width: 768px) {
   .content-section {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.75rem;
+    min-height: calc(100vh - 150px);
   }
 
   .timeline::after {
@@ -848,15 +866,15 @@ p {
   }
 
   #home-section .hero-title-main {
-    font-size: clamp(2.2rem, 8vw, 3.8rem);
+    font-size: clamp(1.5rem, 7vw, 3.8rem);
   }
 
   #home-section .hero-title-hacker {
-    font-size: clamp(1.8rem, 6.5vw, 3rem);
+    font-size: clamp(0.875rem, 4vw, 3rem);
   }
 
   #home-section .hero-subtitle {
-    font-size: clamp(1rem, 4.5vw, 1.3rem);
+    font-size: clamp(0.875rem, 3.5vw, 1.3rem);
   }
 }
 
@@ -877,11 +895,227 @@ p {
   }
 
   #home-section .hero-title-main {
-    font-size: clamp(2rem, 7.5vw, 3.2rem);
+    font-size: clamp(1.25rem, 6.5vw, 3.2rem);
   }
 
   #home-section .hero-title-hacker {
-    font-size: clamp(1.6rem, 6vw, 2.6rem);
+    font-size: clamp(0.75rem, 3.5vw, 2.6rem);
+  }
+}
+
+/* ===================================
+   MOBILE-SPECIFIC OPTIMIZATIONS
+   =================================== */
+
+/* Ensure minimum touch target size (44x44px) for mobile */
+@media (max-width: 767px) {
+  button,
+  a.btn,
+  input[type="submit"],
+  input[type="button"],
+  .mobile-menu-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve tap highlighting */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: rgba(0, 255, 156, 0.2);
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Optimize animations for mobile */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.3s !important;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Improve readability on small screens */
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Enhanced font visibility for mobile navigation */
+  nav a,
+  nav button,
+  nav p,
+  nav span {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-weight: 600 !important;
+  }
+
+  /* Ensure all text is clearly visible */
+  p, span, a, button, h1, h2, h3, h4, h5, h6 {
+    text-shadow: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ensure content doesn't overflow */
+  .content-section {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Optimize images for mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Better spacing for mobile */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Ensure mobile menu text is always visible */
+  #mobile-navigation {
+    font-size: 16px !important;
+  }
+
+  #mobile-navigation a {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.4 !important;
+  }
+
+  #mobile-navigation p {
+    font-weight: 600 !important;
+  }
+}
+
+/* Tablet-specific optimizations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Ensure proper spacing on tablets */
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  /* Optimize grid layouts for tablets */
+  .grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Large desktop optimizations */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  /* Prevent content from being too wide */
+  .content-section {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Extra small mobile devices (320px - 374px) */
+@media (max-width: 374px) {
+  /* Ensure content fits on very small screens */
+  .section-title {
+    font-size: clamp(1.5rem, 8vw, 2.5rem) !important;
+  }
+
+  #home-section .hero-title-main {
+    font-size: clamp(1.2rem, 7vw, 2.8rem) !important;
+  }
+
+  #home-section .hero-title-hacker {
+    font-size: clamp(0.7rem, 3vw, 2rem) !important;
+  }
+
+  /* Reduce padding on very small screens */
+  .content-section {
+    padding: 1rem 0.5rem !important;
+  }
+
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Optimize mobile navigation for small screens */
+  #mobile-navigation {
+    max-width: 280px !important;
+  }
+
+  #mobile-navigation a {
+    font-size: 16px !important;
+    padding: 0.75rem 1rem !important;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-width: 767px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .content-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  /* Optimize header height */
+  header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Optimize mobile navigation for landscape */
+  #mobile-navigation {
+    max-width: 300px !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* Hide navigation and interactive elements */
+  header,
+  footer,
+  .mobile-menu,
+  button,
+  .btn {
+    display: none !important;
+  }
+
+  /* Optimize for printing */
+  body {
+    background: white;
+    color: black;
+  }
+
+  /* Show all content */
+  .content-section {
+    page-break-inside: avoid;
   }
 }
 

@@ -1927,7 +1927,7 @@ const AdminDashboard = () => {
                             <option value="Backend">Backend</option>
                             <option value="Design">Design</option>
                             <option value="Tools">Tools</option>
-                            <option value="Other">Scripting</option>
+                            <option value="Scripting">Scripting</option>
                             <option value="Other">Other</option>
                           </select>
                         </div>
@@ -2753,17 +2753,45 @@ const AdminDashboard = () => {
                 <div>
                   <label className="block text-sm font-medium text-text-primary mb-2 font-mono" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
                     <i className="fas fa-image text-accent-color mr-2"></i>
-                    Profile Image URL *
+                    Profile Image URL * (Google Drive Link or Direct URL)
                   </label>
-                  <input
-                    type="text"
-                    name="profileImage"
-                    value={aboutData.profileImage}
-                    onChange={handleAboutInputChange}
-                    placeholder="URL to profile image"
-                    className="w-full bg-primary-bg/30 border border-accent-color/30 rounded-lg px-4 py-3 text-text-primary font-mono text-sm focus:border-accent-color focus:outline-none"
-                    style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      name="profileImage"
+                      value={aboutData.profileImage}
+                      onChange={handleAboutInputChange}
+                      placeholder="https://drive.google.com/... or direct image URL"
+                      className="flex-1 bg-primary-bg/30 border border-accent-color/30 rounded-lg px-4 py-3 text-text-primary font-mono text-sm focus:border-accent-color focus:outline-none"
+                      style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}
+                    />
+                    <label className="px-4 py-3 bg-blue-500/10 text-blue-500 rounded-lg hover:bg-blue-500/20 border border-blue-500/30 font-mono text-sm cursor-pointer flex items-center gap-2">
+                      <i className="fas fa-upload"></i>
+                      Upload
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleImageUpload(e, 'about')}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  {aboutData.profileImage && (
+                    <div className="mt-2">
+                      <img
+                        src={aboutData.profileImage}
+                        alt="Profile Preview"
+                        className="w-32 h-32 object-cover rounded-lg border-2 border-accent-color/30"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+                  <p className="text-xs text-text-secondary mt-1 font-mono" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+                    <i className="fas fa-info-circle text-accent-color mr-1"></i>
+                    For Google Drive: Share image → Get link → Paste here. Or upload directly.
+                  </p>
                 </div>
 
                 <div>

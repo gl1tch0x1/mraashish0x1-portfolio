@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { aboutAPI, timelineAPI } from '../services/api';
 
-// Import profile image - user needs to place their image at frontend/src/assets/images/profile.jpg
-let profileImage;
+// Import profile image as fallback - user needs to place their image at frontend/src/assets/images/profile.jpg
+let fallbackProfileImage;
 try {
-  profileImage = new URL('../assets/images/profile.jpg', import.meta.url).href;
+  fallbackProfileImage = new URL('../assets/images/profile.jpg', import.meta.url).href;
 } catch (e) {
-  profileImage = null;
+  fallbackProfileImage = null;
 }
 
 const About = () => {
@@ -48,43 +48,54 @@ const About = () => {
   }
 
   return (
-    <section className="content-section">
-      <h2 className="section-title" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+    <section className="content-section px-4">
+      <h2 className="section-title text-2xl sm:text-3xl md:text-4xl" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
         <span className="inline-block w-2 h-2 bg-accent-color rounded-full mr-2"></span>
         About_Me.init()
       </h2>
 
-      <div className="grid md:grid-cols-5 gap-10 items-start">
-        {/* Profile Image - Enhanced */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 sm:gap-8 md:gap-10 items-start">
+        {/* Profile Image - Enhanced & Mobile Responsive */}
         <div className="md:col-span-2 text-center">
-          <div className="rounded-xl border border-accent-color/30 p-6 shadow-lg">
+          <div className="rounded-xl border border-accent-color/30 p-4 sm:p-6 shadow-lg">
             <div className="relative inline-block">
-              {profileImage ? (
+              {(aboutData?.profileImage || fallbackProfileImage) ? (
                 <img
-                  src={profileImage}
+                  src={aboutData?.profileImage || fallbackProfileImage}
                   alt="MrAashish0x1 Profile"
-                  className="rounded-xl w-full max-w-[320px] h-auto mx-auto mb-4 border-4 border-accent-color/30 shadow-xl object-cover"
+                  className="rounded-xl w-full max-w-[280px] sm:max-w-[320px] h-auto mx-auto mb-4 border-2 sm:border-4 border-accent-color/30 shadow-xl object-cover"
                   style={{ aspectRatio: '1/1' }}
+                  onError={(e) => {
+                    // If database image fails, try fallback
+                    if (e.target.src !== fallbackProfileImage && fallbackProfileImage) {
+                      e.target.src = fallbackProfileImage;
+                    } else {
+                      // If both fail, hide image and show placeholder
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling?.classList.remove('hidden');
+                    }
+                  }}
                 />
-              ) : (
-                <div className="rounded-xl w-full max-w-[320px] h-[320px] mx-auto mb-4 border-4 border-accent-color/30 shadow-xl bg-gradient-to-br from-secondary-bg to-primary-bg flex items-center justify-center">
-                  <div className="text-center">
-                    <i className="fas fa-user text-6xl text-accent-color/30 mb-4"></i>
-                    <p className="text-accent-color/50 text-sm" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
-                      Place profile.jpg in<br/>frontend/src/assets/images/
+              ) : null}
+              {!(aboutData?.profileImage || fallbackProfileImage) && (
+                <div className="rounded-xl w-full max-w-[280px] sm:max-w-[320px] h-[280px] sm:h-[320px] mx-auto mb-4 border-2 sm:border-4 border-accent-color/30 shadow-xl bg-gradient-to-br from-secondary-bg to-primary-bg flex items-center justify-center">
+                  <div className="text-center px-4">
+                    <i className="fas fa-user text-4xl sm:text-6xl text-accent-color/30 mb-3 sm:mb-4"></i>
+                    <p className="text-accent-color/50 text-xs sm:text-sm" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+                      Add profile image<br/>via Admin Dashboard
                     </p>
                   </div>
                 </div>
               )}
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-primary-bg"></div>
+              <div className="absolute -top-1 sm:-top-2 -right-1 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full border-2 sm:border-4 border-primary-bg"></div>
             </div>
-            <h3 className="text-3xl title-font text-accent-color mt-4" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+            <h3 className="text-2xl sm:text-3xl title-font text-accent-color mt-3 sm:mt-4" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
               {aboutData?.name || 'MrAashish0x1'}
             </h3>
-            <p className="text-text-secondary text-lg mt-2" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+            <p className="text-text-secondary text-base sm:text-lg mt-2" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
               {aboutData?.title || 'Cybersecurity Specialist | Threat Hunter'}
             </p>
-            <p className="text-sm text-gray-500 mt-2 flex items-center justify-center gap-2" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
+            <p className="text-xs sm:text-sm text-gray-500 mt-2 flex items-center justify-center gap-2" style={{ fontFamily: 'Ubuntu Mono, monospace', fontWeight: 700 }}>
               <i className="fas fa-shield-alt text-accent-color"></i>
               {aboutData?.subtitle || 'Ethical Hacker | Security Researcher'}
             </p>

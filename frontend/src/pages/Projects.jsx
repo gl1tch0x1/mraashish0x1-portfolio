@@ -46,18 +46,18 @@ const Projects = () => {
   const totalPages = projectsResponse?.pages || 1;
 
   return (
-    <section className="content-section">
-      <h2 className="section-title font-mono">
+    <section className="content-section px-4">
+      <h2 className="section-title font-mono text-2xl sm:text-3xl md:text-4xl">
         <span className="inline-block w-2 h-2 bg-accent-color rounded-full animate-pulse mr-2"></span>
         Project_Showcase.exe
       </h2>
-      <p className="text-center text-lg mb-12 text-text-secondary max-w-2xl mx-auto backdrop-blur-sm bg-secondary-bg/30 p-4 rounded-xl border border-accent-color/20">
+      <p className="text-center text-sm sm:text-base md:text-lg mb-8 sm:mb-12 text-text-secondary max-w-2xl mx-auto backdrop-blur-sm bg-secondary-bg/30 p-3 sm:p-4 rounded-xl border border-accent-color/20">
         <i className="fas fa-shield-alt text-accent-color mr-2"></i>
         Security-focused projects demonstrating expertise in penetration testing, vulnerability assessment, and defensive security measures.
       </p>
 
-      {/* Projects Grid - Enhanced */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+      {/* Projects Grid - Enhanced & Mobile Responsive */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-x-6 md:gap-y-8">
         {projects.map((project) => (
           <AnimatedCard
             key={project._id}

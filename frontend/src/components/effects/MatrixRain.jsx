@@ -11,21 +11,36 @@ const MatrixRain = memo(() => {
     const ctx = canvas.getContext('2d', { alpha: false });
     const parent = canvas.parentElement;
 
+    // Detect mobile devices for performance optimization
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+    // Adjust font size and FPS based on device
+    const fontSize = isMobile ? 16 : 14; // Larger font on mobile for better performance
+    const targetFPS = isMobile ? 20 : 30; // Lower FPS on mobile to save battery
+
     // Set canvas size
     const resizeCanvas = () => {
-      canvas.width = parent.offsetWidth;
-      canvas.height = parent.offsetHeight;
+      // Use device pixel ratio for sharper rendering, but limit on mobile
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+      const rect = parent.getBoundingClientRect();
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+
+      ctx.scale(dpr, dpr);
+
       // Reinitialize drops on resize
-      const columns = Math.floor(canvas.width / fontSize);
+      const columns = Math.floor(rect.width / fontSize);
       drops.length = columns;
       for (let x = 0; x < columns; x++) {
-        drops[x] = Math.random() * -(canvas.height / fontSize);
+        drops[x] = Math.random() * -(rect.height / fontSize);
       }
     };
 
     // Matrix rain characters - optimized set
     const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
-    const fontSize = 14;
     const drops = [];
 
     resizeCanvas();
@@ -44,8 +59,7 @@ const MatrixRain = memo(() => {
       .trim() || '#00FF9C';
 
     let lastTime = 0;
-    const fps = 30;
-    const interval = 1000 / fps;
+    const interval = 1000 / targetFPS;
 
     // Optimized animation function
     const draw = (currentTime) => {

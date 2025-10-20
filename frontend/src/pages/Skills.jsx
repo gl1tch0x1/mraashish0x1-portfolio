@@ -32,32 +32,32 @@ const Skills = () => {
   }
 
   return (
-    <section className="content-section">
-      <h2 className="section-title font-mono">
+    <section className="content-section px-4">
+      <h2 className="section-title font-mono text-2xl sm:text-3xl md:text-4xl">
         <span className="inline-block w-2 h-2 bg-accent-color rounded-full animate-pulse mr-2"></span>
         Tech_Stack & Abilities
       </h2>
-      <p className="text-center text-lg mb-12 text-text-secondary max-w-2xl mx-auto backdrop-blur-sm bg-secondary-bg/30 p-4 rounded-xl border border-accent-color/20">
+      <p className="text-center text-sm sm:text-base md:text-lg mb-8 sm:mb-12 text-text-secondary max-w-2xl mx-auto backdrop-blur-sm bg-secondary-bg/30 p-3 sm:p-4 rounded-xl border border-accent-color/20">
         <i className="fas fa-code text-accent-color mr-2"></i>
         Comprehensive cybersecurity toolkit including penetration testing frameworks, security analysis tools, and programming languages for exploit development.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-x-6 md:gap-y-8">
         {skillsData?.map((skill) => (
           <div
             key={skill._id}
-            className="skill-item p-6 rounded-lg shadow-md transition-all duration-300 flex flex-col justify-between interactive-glow-box tilt-effect"
+            className="skill-item p-4 sm:p-6 rounded-lg shadow-md transition-all duration-300 flex flex-col justify-between interactive-glow-box tilt-effect"
           >
             <div>
-              <div className="flex items-center mb-4">
-                <i className={`${skill.icon} ${skill.color} text-4xl mr-4`}></i>
-                <h3 className="text-xl font-semibold hacker-terminal">{skill.name}</h3>
+              <div className="flex items-center mb-3 sm:mb-4">
+                <i className={`${skill.icon} ${skill.color} text-3xl sm:text-4xl mr-3 sm:mr-4`}></i>
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold hacker-terminal">{skill.name}</h3>
               </div>
-              <p className="text-sm text-[var(--text-secondary-color)] mb-3">Level: {skill.level}</p>
+              <p className="text-xs sm:text-sm text-[var(--text-secondary-color)] mb-2 sm:mb-3">Level: {skill.level}</p>
             </div>
 
             {/* Progress Bar */}
-            <div className="w-full bg-[var(--primary-bg)] rounded-full h-3.5 mt-auto border border-[var(--border-color)] overflow-hidden">
+            <div className="w-full bg-[var(--primary-bg)] rounded-full h-3 sm:h-3.5 mt-auto border border-[var(--border-color)] overflow-hidden">
               <div
                 className="bg-[var(--accent-color)] h-full rounded-full transition-all duration-500 ease-out"
                 style={{
