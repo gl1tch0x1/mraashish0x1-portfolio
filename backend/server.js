@@ -63,9 +63,18 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
+
+    // Allow exact matches from allowedOrigins
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+
+    // Allow all Vercel preview/prod subdomains (e.g., https://*.vercel.app)
+    try {
+      const { hostname } = new URL(origin);
+      if (hostname.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+    } catch (_) {}
+
     return callback(new Error(`Not allowed by CORS: ${origin}`));
   },
   credentials: true,

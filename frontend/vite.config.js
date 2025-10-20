@@ -16,13 +16,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -33,6 +27,9 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1000,
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
